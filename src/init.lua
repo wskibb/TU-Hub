@@ -1,5 +1,5 @@
-local UI = loadstring(game:HttpGet(https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/ui.lua))()
-local ESP = loadstring(game:HttpGet(https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/modules/esp.lua))()
+local UI = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/ui.lua"))()
+local ESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/modules/esp.lua"))()
 
 --------------------------------------------------
 -- BUTTON VERBINDEN

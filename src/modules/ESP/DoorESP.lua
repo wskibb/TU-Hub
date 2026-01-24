@@ -13,7 +13,7 @@ function DoorESP:Enable()
 			if model:IsA("Model") and model.Name == "Door" then
 
 				model.AttributeChanged:Connect(function(a)
-					if a == Opened then
+					if a == "Opened" then
 						model:FindFirstChild("DoorESP"):Destroy()
 					end	
 				end)

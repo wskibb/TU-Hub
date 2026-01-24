@@ -68,6 +68,13 @@ function DoorESP:Disable()
 	table.clear(originalTransparency)
 end
 
-
+function DoorESP:SetEnabled(state)
+	if state and not enabled then
+		self:Enable()
+	elseif not state and enabled then
+		self:Disable()
+	end
+	enabled = state
+end
 
 return DoorESP

@@ -16,6 +16,11 @@ function DoorESP:Enable()
 					continue
 				end
 
+				if model:FindFirstChild("Opened") then
+					model:FindFirstChild("DoorESP"):Destroy()
+					continue
+				end
+				
 				local hidden = model:FindFirstChild("Hidden")
 				if hidden then
 					hidden.Transparency = 1
@@ -30,7 +35,7 @@ function DoorESP:Enable()
 
 				local info = Instance.new("BillboardGui")
 				info.Name = "DoorInfo"
-				info.Size = UDim2.new(0, 200, 0, 50)
+				info.Size = UDim2.new(0, 200, 0, 25)
 				info.StudsOffset = Vector3.new(0, 2, 0)
 				info.AlwaysOnTop = true
 				info.Adornee = model.PrimaryPart
@@ -45,7 +50,7 @@ function DoorESP:Enable()
 				label.Font = font
 
 				local currentRoom = tonumber(model.Parent.Name)
-				label.Text = currentRoom and tostring(currentRoom + 1) or "?"
+				label.Text = "Door:" currentRoom and tostring(currentRoom + 1) or "?"
 				label.Parent = info
 				table.insert(created, label)
 			end
@@ -78,3 +83,5 @@ rooms.ChildAdded:Connect(function(room)
 end)
 
 return DoorESP
+
+

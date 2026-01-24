@@ -16,7 +16,7 @@ function KeyESP:SetEnabled(state)
    KeyEnabled = state
     
     if KeyEnabled then
-        rooms:ChildAdded:Connect(function()
+        rooms.ChildAdded:Connect(function()
         
             
             for _, obj in ipairs(rooms:GetDescendants()) do

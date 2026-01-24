@@ -5,7 +5,7 @@ local rooms = workspace.CurrentRooms
 local font = Enum.Font.Oswald
 
 --RushESP
-local RusheESP = {}
+local RushESP = {}
 local RushHighlights = {}
 local RushEnabled = false
 local Rushes = {}

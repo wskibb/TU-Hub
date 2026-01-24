@@ -40,8 +40,7 @@ function KeyESP:SetEnabled(state)
                 Info.Size = UDim2.new(0, 200, 0, 50)
                 Info.StudsOffset = Vector3.new(0, 2, 0)
                 Info.AlwaysOnTop = true
-                Info.Parent = child
-                Info.Adornee = Info.Parent        
+                Info.Parent = obj       
 
                 local textLabel = Instance.new("TextLabel")
                 textLabel.Size = UDim2.fromScale(1, 1)

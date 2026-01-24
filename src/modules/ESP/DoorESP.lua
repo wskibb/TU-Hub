@@ -18,8 +18,8 @@ function DoorESP:Enable()
 					end	
 				end)
 
-				if model:FindFirstChild("DoorESP") or model:FindFirstChild("Opened") then
-					print("Something")	
+				if model:FindFirstChild("DoorESP") or model:GetAttribute("Opened") then
+					print("found one")	
 					continue
 				end
 

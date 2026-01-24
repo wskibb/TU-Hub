@@ -80,5 +80,6 @@ function DoorESP:SetEnabled(state)
     end
 end
 
+return DoorESP
 
 

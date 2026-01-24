@@ -5,7 +5,6 @@ local font = Enum.Font.Oswald
 
 local enabled = false
 local created = {}
-local originalTransparency = {}
 
 function DoorESP:Enable()
 	
@@ -19,7 +18,6 @@ function DoorESP:Enable()
 
 				local hidden = model:FindFirstChild("Hidden")
 				if hidden then
-					originalTransparency[hidden] = hidden.Transparency
 					hidden.Transparency = 1
 				end
 
@@ -62,12 +60,6 @@ function DoorESP:Disable()
 	end
 	table.clear(created)
 
-	for part, value in pairs(originalTransparency) do
-		if part and part.Parent then
-			part.Transparency = value
-		end
-	end
-	table.clear(originalTransparency)
 end
 
 function DoorESP:SetEnabled(state)

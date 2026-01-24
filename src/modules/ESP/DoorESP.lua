@@ -1,85 +1,73 @@
-
---Variable
+local DoorESP = {}
 
 local rooms = workspace.CurrentRooms
 local font = Enum.Font.Oswald
 
---DoorESP
+local enabled = false
+local created = {}
+local originalTransparency = {}
 
-local DoorESP = {}
-local DoorHighlights = {}
-local DoorEnabled = false
-local Doors = {}
+function DoorESP:Enable()
+	for _, model in ipairs(rooms:GetDescendants()) do
+		if model:IsA("Model") and model.Name == "Door" then
 
-function DoorESP:SetEnabled(state)
-    
-    DoorEnabled = state
+			if model:FindFirstChild("DoorESP") then
+				continue
+			end
 
-    if DoorEnabled then
-        
-        for _, child in ipairs(rooms:GetDescendants()) do
-            if child.Name == "Door" then
-                if child:IsA("Model") then
-                    table.insert(Doors, child)
-                end
-                    
-                    
-                
-                for _, child in ipairs(Doors) do
-                    
-                    if child:FindFirstChild("DoorESP") or child:FindFirstChild("Info") then 
-                        continue 
-                    end
-                    
-                    child.Hidden.Transparency = 1
-                    
-                    local DoorESP = Instance.new("Highlight")
-                    DoorESP.Name = "DoorESP"
-                    DoorESP.FillColor = Color3.fromRGB(181, 101, 29)
-                    DoorESP.OutlineColor = Color3.fromRGB(181, 101, 29)
-                    DoorESP.Parent = child
+			local hidden = model:FindFirstChild("Hidden")
+			if hidden then
+				originalTransparency[hidden] = hidden.Transparency
+				hidden.Transparency = 1
+			end
 
-                    local Info = Instance.new("BillboardGui")
-                    Info.Name = "DoorInfo"
-                    Info.Size = UDim2.new(0, 200, 0, 50)
-                    Info.StudsOffset = Vector3.new(0, 2, 0)
-                    Info.AlwaysOnTop = true
-                    Info.Parent = child
-                    Info.Adornee = Info.Parent.Door
+			local highlight = Instance.new("Highlight")
+			highlight.Name = "DoorESP"
+			highlight.FillColor = Color3.fromRGB(181, 101, 29)
+			highlight.OutlineColor = Color3.fromRGB(181, 101, 29)
+			highlight.Parent = model
+			table.insert(created, highlight)
 
-                    local textLabel = Instance.new("TextLabel")
-                    textLabel.Size = UDim2.fromScale(1, 1)
-                    textLabel.BackgroundTransparency = 1
-                    local currentRoom = tonumber(child.Parent.Name)
-                    if currentRoom then
-                        textLabel.Text = tostring(currentRoom + 1)
-                    else
-                        textLabel.Text = "?"
-                    end
-                    textLabel.TextScaled = true
-                    textLabel.TextColor3 = Color3.new(255, 255, 255)
-                    textLabel.Font = font
-                    textLabel.Parent = Info   
-                    
-                    table.insert(DoorHighlights, DoorESP, Info, textlabel)
-                
-                end
-            end
-        end 
+			local info = Instance.new("BillboardGui")
+			info.Name = "DoorInfo"
+			info.Size = UDim2.new(0, 200, 0, 50)
+			info.StudsOffset = Vector3.new(0, 2, 0)
+			info.AlwaysOnTop = true
+			info.Adornee = model.PrimaryPart
+			info.Parent = model
+			table.insert(created, info)
 
-    else            
-        
-        for _,  esp in ipairs(DoorHighlights) do
-            if  esp and  esp.Parent then
-                esp:Destroy()              
-            end
-        end            
+			local label = Instance.new("TextLabel")
+			label.Size = UDim2.fromScale(1, 1)
+			label.BackgroundTransparency = 1
+			label.TextScaled = true
+			label.TextColor3 = Color3.new(1, 1, 1)
+			label.Font = font
 
-        table.clear(DoorHighlights)
-
-    end
+			local currentRoom = tonumber(model.Parent.Name)
+			label.Text = currentRoom and tostring(currentRoom + 1) or "?"
+			label.Parent = info
+			table.insert(created, label)
+		end
+	end
 end
 
+function DoorESP:Disable()
+	for _, obj in ipairs(created) do
+		if obj and obj.Parent then
+			obj:Destroy()
+		end
+	end
+	table.clear(created)
+
+	for part, value in pairs(originalTransparency) do
+		if part and part.Parent then
+			part.Transparency = value
+		end
+	end
+	table.clear(originalTransparency)
+end
+
+
+
 return DoorESP
-
-

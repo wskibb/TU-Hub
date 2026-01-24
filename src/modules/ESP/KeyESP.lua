@@ -27,7 +27,9 @@ function KeyESP:SetEnabled(state)
                 
             for _, obj in ipairs(Keys) do
                 
-                if obj:FindFirstChild("KeyESP") then continue end
+                if obj:FindFirstChild("KeyESP") then 
+                    continue 
+                end
 
                 local   esp = Instance.new("Highlight")
                 esp.Name = "KeyESP"

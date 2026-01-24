@@ -80,7 +80,8 @@ function DoorESP:SetEnabled(state)
 end
 
 rooms.ChildAdded:Connect(function(room)
-if not enabled then return end
+	if not enabled then return end
+	wait(1)
 	DoorESP:Enable()
 end)
 

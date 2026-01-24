@@ -12,10 +12,14 @@ function DoorESP:Enable()
 		for _, model in ipairs(rooms:GetDescendants()) do
 			if model:IsA("Model") and model.Name == "Door" then
 
-				if model:FindFirstChild("DoorESP") or model:FindFirstChild("Opened") then
-					if model:FindFirstChild("Opened") then
+				model.AttributeChanged:Connect(function(a)
+					if a == Opened then
 						model:FindFirstChild("DoorESP"):Destroy()
 					end	
+				end)
+
+				if model:FindFirstChild("DoorESP") or model:FindFirstChild("Opened") then
+					print("Something")	
 					continue
 				end
 

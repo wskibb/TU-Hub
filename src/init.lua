@@ -1,5 +1,7 @@
 local UI = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/ui.lua"))()
-local ESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/modules/esp.lua"))()
+local DoorESP = 
+local KeyESP = 
+local RushESP =
 
 --------------------------------------------------
 -- BUTTON VERBINDEN
@@ -11,4 +13,8 @@ end)
 
 UI:AddToggle("Key ESP", function(state)
 	KeyESP:SetEnabled(state)
+end)
+
+UI:AddToggle("RushESP", function(state)
+	RushESP:SetEnabled(state)
 end)

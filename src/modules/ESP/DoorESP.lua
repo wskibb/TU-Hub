@@ -50,7 +50,7 @@ function DoorESP:Enable()
 				label.Font = font
 
 				local currentRoom = tonumber(model.Parent.Name)
-				label.Text = "Door:" currentRoom and tostring(currentRoom + 1) or "?"
+				label.Text = "Door: " .. currentRoom and tostring(currentRoom + 1) or "?"
 				label.Parent = info
 				table.insert(created, label)
 			end

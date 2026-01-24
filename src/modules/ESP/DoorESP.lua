@@ -8,7 +8,7 @@ local created = {}
 local originalTransparency = {}
 
 function DoorESP:Enable()
-	rooms.ChildAdded:Connect(function()
+	
 	
 		for _, model in ipairs(rooms:GetDescendants()) do
 			if model:IsA("Model") and model.Name == "Door" then
@@ -52,7 +52,6 @@ function DoorESP:Enable()
 				table.insert(created, label)
 			end
 		end
-	end)
 end
 
 function DoorESP:Disable()
@@ -79,5 +78,10 @@ function DoorESP:SetEnabled(state)
 	end
 	enabled = state
 end
+
+rooms.ChildAdded:Connect(function(room)
+if not enabled then return end
+	DoorESP:Enable()
+end)
 
 return DoorESP

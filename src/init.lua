@@ -1,12 +1,14 @@
 local UI = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/ui.lua"))()
 local DoorESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/modules/ESP/DoorESP.lua"))()
 
+--shutdown
 
---------------------------------------------------
--- BUTTON VERBINDEN
---------------------------------------------------
+UI:Close(function()
+	DoorESP:SetEnabled(false)
+end)
 
---Buttons for Main Page
+
+--Buttonconnection
 
 UI:addToggleButton("DoorESP", UI.mainPage, function(state)
 	DoorESP:SetEnabled(state)

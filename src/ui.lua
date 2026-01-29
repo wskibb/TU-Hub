@@ -33,7 +33,7 @@ mainCorner.CornerRadius = UDim.new(0, 6)
 mainCorner.Parent = main
 
 --------------------------------------------------
--- Top Bar (ziehbar)
+-- Top Bar
 --------------------------------------------------
 
 local topBar = Instance.new("Frame")
@@ -57,15 +57,6 @@ title.Font = Enum.Font.SourceSansSemibold
 title.TextSize = 18
 title.TextStrokeTransparency = 0
 title.Parent = topBar
-
-local CloseButton = Instance.new("TextButton")
-CloseButton.Size = UDim2.new(0.08, 0, 0.6, 0)
-CloseButton.Position = UDim2.new(0.9,0,0.2,0)
-CloseButton.BackgroundTransparency = 1
-CloseButton.TextColor3 = Color3.fromRGB(255,0,0)
-CloseButton.Text = "x"
-CloseButton.TextSize = 12
-CloseButton.Parent = topBar
 
 local HideButton = Instance.new("TextButton")
 HideButton.Size = UDim2.new(0.08, 0, 0.6, 0)
@@ -107,9 +98,23 @@ local function DisableCursor()
 	UIS.MouseBehavior = Enum.MouseBehavior.LockCenter
 end
 
-local function Close()
-	gui:Destroy()
-	DisableCursor()
+function UI:Close(callback)
+	
+	local CloseButton = Instance.new("TextButton")
+	CloseButton.Size = UDim2.new(0.08, 0, 0.6, 0)
+	CloseButton.Position = UDim2.new(0.9,0,0.2,0)
+	CloseButton.BackgroundTransparency = 1
+	CloseButton.TextColor3 = Color3.fromRGB(255,0,0)
+	CloseButton.Text = "x"
+	CloseButton.TextSize = 12
+	CloseButton.Parent = topBar
+	
+	CloseButton.MouseButton1Click:Connect(function()
+		callback()
+		gui:Destroy()
+		DisableCursor()
+	end)
+	
 end
 
 local function Hide()
@@ -120,12 +125,8 @@ end
 
 
 
-
-
-
-
-CloseButton.MouseButton1Click:Connect(Close)
 HideButton.MouseButton1Click:Connect(Hide)
+
 UIS.InputBegan:Connect(function(input)
 	if input.KeyCode == Enum.KeyCode.RightShift then
 

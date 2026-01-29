@@ -343,8 +343,8 @@ createTab("Settings", settingsPage)
 
 
 -- Default Page
-mainPage.Visible = true
-currentPage = mainPage
+UI.mainPage.Visible = true
+currentPage = UI.mainPage
 
 EnableCursor()
 

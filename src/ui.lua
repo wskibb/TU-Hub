@@ -220,6 +220,7 @@ local function createPage(name)
 	page.Parent = contentFrame
 
 	local label = Instance.new("TextLabel")
+	label.LayoutOrder = -1
 	label.Size = UDim2.new(1, -20, 0, 30)
 	label.Position = UDim2.new(0, 20, 0, 20)
 	label.BackgroundTransparency = 1
@@ -247,6 +248,7 @@ end
 function UI:addToggleButton(name, page, callback)
 	
 	local btn = Instance.new("ImageButton")
+	btn.LayoutOrder = 1
 	btn.Size = UDim2.new(0, 15, 0, 15)
 	btn.Parent = page
 	btn.Name = name

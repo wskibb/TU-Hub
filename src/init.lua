@@ -10,7 +10,7 @@ end)
 
 --Buttonconnection
 
-UI:addToggleButton("DoorESP", UI.mainPage, function(state)
+UI:addToggleButton("Door ESP", UI.visualsPage, function(state)
 	DoorESP:SetEnabled(state)
 end)
 

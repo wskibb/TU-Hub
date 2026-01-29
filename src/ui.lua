@@ -275,7 +275,7 @@ function UI:addToggleButton(name, page, callback)
 	btnname.Size = UDim2.new(0, 130, 0, 15)
 	btnname.BackgroundTransparency = 1
 	btnname.Text = name
-	btnname.TextColor3 = Color3.fromRGB(255, 255, 255)
+	btnname.TextColor3 = Color3.fromRGB(147, 0, 221)
 	btnname.Font = Enum.Font.Oswald
 	btnname.TextStrokeTransparency = 0
 	btnname.TextStrokeColor3 = Color3.fromRGB(0,0,0)

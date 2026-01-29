@@ -335,10 +335,10 @@ UI.settingsPage = createPage("Settings")
 -- Tabs
 --------------------------------------------------
 
-createTab("Main", mainPage)
-createTab("Visuals", visualsPage)
-createTab("Exploit", exploitPage)
-createTab("Settings", settingsPage)
+createTab("Main", UI.mainPage)
+createTab("Visuals", UI.visualsPage)
+createTab("Exploit", UI.exploitPage)
+createTab("Settings", UI.settingsPage)
 
 
 

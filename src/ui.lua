@@ -246,8 +246,6 @@ end
 
 function UI:addToggleButton(name, page, callback)
 	
-	local enabled = false
-	
 	local btn = Instance.new("ImageButton")
 	btn.Size = UDim2.new(0, 15, 0, 15)
 	btn.Parent = page
@@ -328,10 +326,10 @@ end
 -- Pages
 --------------------------------------------------
 
-local mainPage = createPage("Main")
-local visualsPage = createPage("Visuals")
-local exploitPage = createPage("Exploit")
-local settingsPage = createPage("Settings")
+UI.mainPage = createPage("Main")
+UI.visualsPage = createPage("Visuals")
+UI.exploitPage = createPage("Exploit")
+UI.settingsPage = createPage("Settings")
 
 --------------------------------------------------
 -- Tabs

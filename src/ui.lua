@@ -231,12 +231,20 @@ local function createPage(name)
 	label.TextSize = 22
 	label.TextXAlignment = "Left"
 	label.Parent = page
-	
+
+	local pagecontainer = Instance.new("Frame")
+	pagecontainer.Name = "Container"
+	pagecontainer.Size = UDim2.new(0,600,0,390)
+	pagecontainer.BackgroundTransparency = 1
+	pagecontainer.Position = UDim2.new(0.03,0,0.16,0)
+	pagecontainer.Parent = page
+
 	local pagelayout = Instance.new("UIListLayout")
-	pagelayout.Padding = UDim.new(0, 20)
-	pagelayout.Parent = page
+	pagelayout.Padding = UDim.new(0, 30)
+	pagelayout.Parent = pagecontainer
+
+	return page, pagecontainer
 	
-	return page
 end
 
 
@@ -246,21 +254,21 @@ end
 
 
 function UI:addToggleButton(name, page, callback)
-	
+
 	local btn = Instance.new("ImageButton")
 	btn.LayoutOrder = 1
 	btn.Size = UDim2.new(0, 15, 0, 15)
-	btn.Parent = page
+	btn.Parent = page.Container
 	btn.Name = name
 	btn.BackgroundColor3 = Color3.fromRGB(0,0,0)
 	btn.BorderColor3 = Color3.fromRGB(61,61,61)
 	btn.BorderSizePixel = 1
 	btn.Image = ""
-	
+
 	local up = Instance.new("UIPadding")
 	up.Parent = btn
 	up.PaddingLeft = UDim.new(1, 0)
-	
+
 	local btnname = Instance.new("TextLabel")
 	btnname.Parent = btn
 	btnname.Size = UDim2.new(0, 130, 0, 15)
@@ -273,25 +281,25 @@ function UI:addToggleButton(name, page, callback)
 	btnname.TextSize = 18
 	btnname.TextXAlignment = "Left"
 	btnname.Position = UDim2.new(0, 10, 0, 0)
-	
-	
+
+
 	local enabled = false
-	
+
 	btn.MouseButton1Click:Connect(function()
 		enabled = not enabled
-		
+
 		if enabled then
 			btn.BackgroundColor3 = Color3.fromRGB(147, 0, 221)
 		else
 			btn.BackgroundColor3 = Color3.fromRGB(0,0,0)
 		end
-		
+
 		callback(enabled)
 	end)
-	
-	
-	
-	
+
+
+
+
 end
 --------------------------------------------------
 -- Tab Button Creator

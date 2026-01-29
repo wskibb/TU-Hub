@@ -8,7 +8,7 @@ local DoorESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskib
 
 --Buttons for Main Page
 
-UI:addToggleButton("Walkspeed", UI.mainPage, function(state)
+UI:addToggleButton("DoorESP", UI.mainPage, function(state)
 	DoorESP:SetEnabled(state)
 end)
 

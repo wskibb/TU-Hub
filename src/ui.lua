@@ -4,6 +4,7 @@ local player = Players.LocalPlayer
 local uivisible = true
 local RunService = game:GetService("RunService")
 local CursorConnection
+local mouse = player:GetMouse()
 
 local UI = {}
 
@@ -33,7 +34,7 @@ mainCorner.CornerRadius = UDim.new(0, 6)
 mainCorner.Parent = main
 
 --------------------------------------------------
--- Top Bar
+-- Top Bar (ziehbar)
 --------------------------------------------------
 
 local topBar = Instance.new("Frame")
@@ -57,6 +58,15 @@ title.Font = Enum.Font.SourceSansSemibold
 title.TextSize = 18
 title.TextStrokeTransparency = 0
 title.Parent = topBar
+
+local CloseButton = Instance.new("TextButton")
+CloseButton.Size = UDim2.new(0.08, 0, 0.6, 0)
+CloseButton.Position = UDim2.new(0.9,0,0.2,0)
+CloseButton.BackgroundTransparency = 1
+CloseButton.TextColor3 = Color3.fromRGB(255,0,0)
+CloseButton.Text = "x"
+CloseButton.TextSize = 12
+CloseButton.Parent = topBar
 
 local HideButton = Instance.new("TextButton")
 HideButton.Size = UDim2.new(0.08, 0, 0.6, 0)
@@ -98,23 +108,9 @@ local function DisableCursor()
 	UIS.MouseBehavior = Enum.MouseBehavior.LockCenter
 end
 
-function UI:Close(callback)
-	
-	local CloseButton = Instance.new("TextButton")
-	CloseButton.Size = UDim2.new(0.08, 0, 0.6, 0)
-	CloseButton.Position = UDim2.new(0.9,0,0.2,0)
-	CloseButton.BackgroundTransparency = 1
-	CloseButton.TextColor3 = Color3.fromRGB(255,0,0)
-	CloseButton.Text = "x"
-	CloseButton.TextSize = 12
-	CloseButton.Parent = topBar
-	
-	CloseButton.MouseButton1Click:Connect(function()
-		callback()
-		gui:Destroy()
-		DisableCursor()
-	end)
-	
+local function Close()
+	gui:Destroy()
+	DisableCursor()
 end
 
 local function Hide()
@@ -124,9 +120,8 @@ local function Hide()
 end
 
 
-
+CloseButton.MouseButton1Click:Connect(Close)
 HideButton.MouseButton1Click:Connect(Hide)
-
 UIS.InputBegan:Connect(function(input)
 	if input.KeyCode == Enum.KeyCode.RightShift then
 
@@ -139,6 +134,8 @@ UIS.InputBegan:Connect(function(input)
 		end
 	end
 end)
+
+
 --------------------------------------------------
 -- Drag Logic (Top Bar)
 --------------------------------------------------
@@ -245,19 +242,19 @@ local function createPage(name)
 	pagelayout.Parent = pagecontainer
 
 	return page, pagecontainer
-	
+
 end
 
 
 --------------------------------------------------
--- Button Creator
+-- Toggle Button Creator
 --------------------------------------------------
 
 
-function UI:addToggleButton(name, page, callback)
+function UI:addToggleButton(name, page, LayoutOrder, callback)
 
 	local btn = Instance.new("ImageButton")
-	btn.LayoutOrder = 1
+	btn.LayoutOrder = LayoutOrder
 	btn.Size = UDim2.new(0, 15, 0, 15)
 	btn.Parent = page.Container
 	btn.Name = name
@@ -266,22 +263,18 @@ function UI:addToggleButton(name, page, callback)
 	btn.BorderSizePixel = 1
 	btn.Image = ""
 
-	local up = Instance.new("UIPadding")
-	up.Parent = btn
-	up.PaddingLeft = UDim.new(1, 0)
-
 	local btnname = Instance.new("TextLabel")
 	btnname.Parent = btn
 	btnname.Size = UDim2.new(0, 130, 0, 15)
 	btnname.BackgroundTransparency = 1
 	btnname.Text = name
 	btnname.TextColor3 = Color3.fromRGB(147, 0, 221)
-	btnname.Font = Enum.Font.Oswald
+	btnname.Font = Enum.Font.SourceSans
 	btnname.TextStrokeTransparency = 0
 	btnname.TextStrokeColor3 = Color3.fromRGB(0,0,0)
 	btnname.TextSize = 18
 	btnname.TextXAlignment = "Left"
-	btnname.Position = UDim2.new(0, 10, 0, 0)
+	btnname.Position = UDim2.new(0, 25, 0, 0)
 
 
 	local enabled = false
@@ -297,10 +290,76 @@ function UI:addToggleButton(name, page, callback)
 
 		callback(enabled)
 	end)
+end
 
 
+--------------------------------------------------
+-- Slider Creator
+--------------------------------------------------
+function UI:addSlider(name, min, max, page, LayoutOrder, callback)
+	local slider = Instance.new("Frame")
+	slider.LayoutOrder = LayoutOrder
+	slider.Size = UDim2.new(0, 150, 0, 15)
+	slider.BorderColor3 = Color3.fromRGB(61,61,61)
+	slider.BorderSizePixel = 1
+	slider.BackgroundColor3 = Color3.fromRGB(0,0,0)
+	slider.Parent = page.Container
+	slider.Name = name
+
+	local fill = Instance.new("Frame")
+	fill.Name = "fill"
+	fill.Size = UDim2.new(0, 0, 1, 0)
+	fill.BackgroundColor3 = Color3.fromRGB(147, 0, 221)
+	fill.BorderSizePixel = 0
+	fill.Parent = slider
+
+	local title = Instance.new("TextLabel")
+	title.Parent = slider
+	title.BackgroundTransparency = 1
+	title.Text = name .. " [ " .. min .. " ]"
+	title.TextColor3 = Color3.fromRGB(147, 0, 221)
+	title.TextStrokeTransparency = 0
+	title.TextStrokeColor3 = Color3.fromRGB(0,0,0)
+	title.TextSize = 16
+	title.Size = UDim2.new(1, 0, 1, 0)
+	title.Font = Enum.Font.SourceSans
+	title.TextXAlignment = "Center"
 
 
+	local dragging = false
+
+	local function update()
+		local mousePos = mouse.X
+		local barPos = slider.AbsolutePosition.X
+		local barWidth = slider.AbsoluteSize.X
+
+		local percentage = math.clamp((mousePos - barPos) / barWidth, 0, 1)
+		fill.Size = UDim2.new(percentage, 0, 1, 0)
+
+
+		local value = math.floor(percentage * (max - min) + min)
+		title.Text = name .. " [ " .. value .. " ]"
+		callback(value)
+	end
+
+	slider.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+			dragging = true
+			update()
+		end
+	end)
+
+	UIS.InputEnded:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+			dragging = false
+		end
+	end)
+
+	UIS.InputChanged:Connect(function(input)
+		if dragging then
+			update()
+		end
+	end)
 end
 --------------------------------------------------
 -- Tab Button Creator

@@ -14,7 +14,7 @@ function DoorESP:Enable()
 
 				model.AttributeChanged:Connect(function(a)
 					if a == "Opened" then
-						wait(5)
+						task.wait(5)
 						model:FindFirstChild("DoorInfo"):Destroy()
 						model:FindFirstChild("DoorESP"):Destroy()
 					end	
@@ -85,7 +85,7 @@ end
 
 rooms.ChildAdded:Connect(function(room)
 	if not enabled then return end
-	wait(1)
+	task.wait(1)
 	DoorESP:Enable()
 end)
 

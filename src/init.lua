@@ -10,7 +10,7 @@ UI:CloseButton(function()
 	local char = game.Players.LocalPlayer.Character
 	
 	if char then
-		char.SpeedBoost = 0
+		char:SetAttribute("SpeedBoost", 0) 
 	end
 	DoorESP:SetEnabled(false)
 end)
@@ -28,9 +28,9 @@ UI:addToggleButton("Enable Walkspeed", UI.mainPage, 1, function(state)
 
 	if char then
 		if walkspeedActive then
-			char.SpeedBoost = currentSpeedValue
+			char:SetAttribute("SpeedBoost", currentSpeedValue)
 		else
-			char.SpeedBoost = 0
+			char:SetAttribute("SpeedBoost", 0)
 		end
 	end
 end)
@@ -41,7 +41,7 @@ UI:addSlider("Walkspeed", 0, 75, UI.mainPage, 2, function(value)
 
 	if walkspeedActive then
 		if char then
-			char.SpeedBoost = value
+			char:SetAttribute("SpeedBoost", value)
 		end
 	end
 end)

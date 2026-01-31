@@ -6,7 +6,7 @@ local walkspeedActive = false
 local currentSpeedValue = 0
 --shutdown
 
-UI:Close(function()
+UI:CloseButton(function()
 	local char = game.Players.LocalPlayer.Character
 	
 	if char then

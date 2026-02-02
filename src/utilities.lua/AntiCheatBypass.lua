@@ -15,20 +15,13 @@ if collisionCrouch then
 end
 
 
-    while enabled do
-        if ntclp and ntclp.Parent then
-            ntclp.Massless = not ntclp.Massless
-        end
-    end
-
-
-
 function Bp:SetEnabled(state)
     enabled = state
     while enabled do
         if ntclp and ntclp.Parent then
             ntclp.Massless = not ntclp.Massless
             print(enabled)
+            task.wait(.25)
         end
     end
 end

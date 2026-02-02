@@ -1,4 +1,3 @@
-
 local DoorESP = {}
 
 local rooms = workspace.CurrentRooms

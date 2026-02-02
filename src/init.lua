@@ -2,6 +2,8 @@ local UI = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskibb/TU-
 local DoorESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/modules/ESP/DoorESP.lua"))()
 
 
+local plr = game.Players.LocalPlayer
+
 local walkspeedActive = false
 local currentSpeedValue = 0
 --shutdown
@@ -18,10 +20,17 @@ end)
 
 --Buttonconnection
 
+--AntiCheat Bypass
+UI:addToggleButton("Bypass Anti-Cheat", UI.mainPage, -1, function(state)
+	Bp:SetEnabled(state)
+end)
+	
+--DoorESP
 UI:addToggleButton("Door ESP", UI.visualsPage, -1, function(state)
 	DoorESP:SetEnabled(state)
 end)
 
+--Enable Walkspeed Button
 UI:addToggleButton("Enable Walkspeed", UI.mainPage, 1, function(state)
 	walkspeedActive = state
 	local char = game.Players.LocalPlayer.Character
@@ -35,6 +44,7 @@ UI:addToggleButton("Enable Walkspeed", UI.mainPage, 1, function(state)
 	end
 end)
 
+--Change Walkspeed Slider
 UI:addSlider("Walkspeed", 0, 75, UI.mainPage, 2, function(value)
 	currentSpeedValue = value
 	local char = game.Players.LocalPlayer.Character

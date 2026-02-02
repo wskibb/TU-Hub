@@ -1,4 +1,4 @@
-local AnimationFromVideoCreatorService = game:GetService("AnimationFromVideoCreatorService")
+
 local DoorESP = {}
 
 local rooms = workspace.CurrentRooms
@@ -28,7 +28,7 @@ function DoorESP:Enable()
 
 						if esp then
 							local index = table.find(created, esp)
-							if index then table.remove(created, index)
+							if index then table.remove(created, index) end
 							esp:Destroy()
 						end
 

@@ -1,3 +1,4 @@
+local AnimationFromVideoCreatorService = game:GetService("AnimationFromVideoCreatorService")
 local DoorESP = {}
 
 local rooms = workspace.CurrentRooms
@@ -13,10 +14,25 @@ function DoorESP:Enable()
 			if model:IsA("Model") and model.Name == "Door" then
 
 				model.AttributeChanged:Connect(function(a)
-					if a == "Opened" then
+					if a == "Opened" and model:GetAttribute("Opened") == true then
 						task.wait(5)
-						model:FindFirstChild("DoorInfo"):Destroy()
-						model:FindFirstChild("DoorESP"):Destroy()
+						
+						local info = model:FindFirstChild("DoorInfo")
+						local esp = model:FindFirstChild("DoorESP")
+
+						if info then
+							local index = table.find(created, info)
+							if index then table.remove(created, index) end
+							info:Destroy()
+						end
+
+						if esp then
+							local index = table.find(created, esp)
+							if index then table.remove(created, index)
+							esp:Destroy()
+						end
+
+						
 					end	
 				end)
 
@@ -57,7 +73,7 @@ function DoorESP:Enable()
 				label.Font = font
 
 				local currentRoom = tonumber(model.Parent.Name)
-				label.Text = "Door: " .. (currentRoom and tostring(currentRoom + 1) or "?")
+				label.Text = "Door:\n[ " .. (currentRoom and tostring(currentRoom + 1) or "?") .. " ]"
 				label.Parent = info
 				table.insert(created, label)
 			end

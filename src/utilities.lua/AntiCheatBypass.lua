@@ -1,6 +1,6 @@
+local Bp = {}
 local player = game.Players.LocalPlayer
 local tclp = player.Character.CollisionPart
-local Bp = {}
 local enabled = false
 
 local ntclp = tclp:Clone()

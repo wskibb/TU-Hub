@@ -1,5 +1,6 @@
 local UI = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/ui.lua"))()
 local DoorESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/modules/ESP/DoorESP.lua"))()
+local KeyESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/modules/ESP/KeyESP.lua"))()
 local ACBypass = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/utilities.lua/AntiCheatBypass.lua"))()
 
 
@@ -7,6 +8,7 @@ local plr = game.Players.LocalPlayer
 
 local walkspeedActive = false
 local currentSpeedValue = 0
+
 --shutdown
 
 UI:CloseButton(function()
@@ -15,22 +17,29 @@ UI:CloseButton(function()
 	if char then
 		char:SetAttribute("SpeedBoost", 0) 
 	end
+	
 	DoorESP:SetEnabled(false)
+
+	ACBypass:SetEnabled(false)
 end)
 
 
---Buttonconnection
+--//Buttons\\--
 
 --AntiCheat Bypass
 UI:addToggleButton("Bypass Anti-Cheat", UI.mainPage, -1, function(state)
-	Bp:SetEnabled(state)
+	ACBypass:SetEnabled(state)
 end)
 	
 --DoorESP
-UI:addToggleButton("Door ESP", UI.visualsPage, -1, function(state)
+UI:addToggleButton("Door ESP", UI.visualsPage, 0, function(state)
 	DoorESP:SetEnabled(state)
 end)
 
+--KeyESP
+UI:addToggleButton("KeyESP", UI.visualsPage, 1, function(state)
+	KeyESP:SetEnabled(state)
+end)
 --Enable Walkspeed Button
 UI:addToggleButton("Enable Walkspeed", UI.mainPage, 1, function(state)
 	walkspeedActive = state

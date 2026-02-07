@@ -82,17 +82,20 @@ HideButton.Parent = topBar
 --------------------------------------------------
 
 local function EnableCursor()
-	uivisible = true
+	if gui then
 
-	UIS.MouseIconEnabled = true
-	UIS.MouseBehavior = Enum.MouseBehavior.Default
+		uivisible = true
 
-	CursorConnection = RunService.RenderStepped:Connect(function()
-		if uivisible then
-			UIS.MouseIconEnabled = true
-			UIS.MouseBehavior = Enum.MouseBehavior.Default
-		end
-	end)
+		UIS.MouseIconEnabled = true
+		UIS.MouseBehavior = Enum.MouseBehavior.Default
+
+		CursorConnection = RunService.RenderStepped:Connect(function()
+			if uivisible then
+				UIS.MouseIconEnabled = true
+				UIS.MouseBehavior = Enum.MouseBehavior.Default
+			end
+		end)
+	end
 end	
 
 

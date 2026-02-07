@@ -64,9 +64,10 @@ function DoorESP:Enable()
 				table.insert(created, info)
 
 				local label = Instance.new("TextLabel")
-				label.Size = UDim2.fromScale(1, 1)
+				label.Size = UDim2.fromScale(1, 2)
 				label.BackgroundTransparency = 1
-				label.TextScaled = true
+				label.TextScaled = false
+				label.TextSize = 20
 				label.TextColor3 = Color3.new(181, 101, 29)
 				label.TextStrokeTransparency = 0
 				label.Font = font

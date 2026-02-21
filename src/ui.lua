@@ -82,20 +82,19 @@ HideButton.Parent = topBar
 --------------------------------------------------
 
 local function EnableCursor()
-	if gui then
+	if not gui then return end
 
-		uivisible = true
+	uivisible = true
 
-		UIS.MouseIconEnabled = true
-		UIS.MouseBehavior = Enum.MouseBehavior.Default
+	UIS.MouseIconEnabled = true
+	UIS.MouseBehavior = Enum.MouseBehavior.Default
 
-		CursorConnection = RunService.RenderStepped:Connect(function()
-			if uivisible then
-				UIS.MouseIconEnabled = true
-				UIS.MouseBehavior = Enum.MouseBehavior.Default
-			end
-		end)
-	end
+	CursorConnection = RunService.RenderStepped:Connect(function()
+		if uivisible then
+			UIS.MouseIconEnabled = true
+			UIS.MouseBehavior = Enum.MouseBehavior.Default
+		end
+	end)
 end	
 
 
@@ -153,7 +152,6 @@ UIS.InputBegan:Connect(function(input)
 	end
 end)
 
-
 --------------------------------------------------
 -- Drag Logic (Top Bar)
 --------------------------------------------------
@@ -207,7 +205,6 @@ tabPadding.Parent = sidebar
 tabPadding.PaddingTop = UDim.new(0, 10)
 tabPadding.PaddingLeft = UDim.new(0, 10)
 tabPadding.PaddingRight = UDim.new(0, 10)
-
 
 --------------------------------------------------
 -- Content Area
@@ -263,11 +260,9 @@ local function createPage(name)
 
 end
 
-
 --------------------------------------------------
 -- Toggle Button Creator
 --------------------------------------------------
-
 
 function UI:addToggleButton(name, page, LayoutOrder, callback)
 
@@ -310,10 +305,10 @@ function UI:addToggleButton(name, page, LayoutOrder, callback)
 	end)
 end
 
-
 --------------------------------------------------
 -- Slider Creator
 --------------------------------------------------
+
 function UI:addSlider(name, min, max, page, LayoutOrder, callback)
 	local slider = Instance.new("Frame")
 	slider.LayoutOrder = LayoutOrder
@@ -379,6 +374,7 @@ function UI:addSlider(name, min, max, page, LayoutOrder, callback)
 		end
 	end)
 end
+
 --------------------------------------------------
 -- Tab Button Creator
 --------------------------------------------------

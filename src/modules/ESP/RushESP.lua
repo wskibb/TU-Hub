@@ -1,61 +1,78 @@
 
 --Variable
 
-local rooms = workspace.CurrentRooms
+local ws = game.Workspace
 local font = Enum.Font.Oswald
 
 --RushESP
+
 local RushESP = {}
 local RushHighlights = {}
-local RushEnabled = false
-local Rushes = {}
+local Rushs = {}
+local enabled = false
+
+function RushESP:Enable(state)
+    
+    for _, obj in ipairs(ws:GetChildren()) do
+        if obj.Name == "RushMoving" then
+            table.insert(Rushs, obj)
+        end
+    end            
+        
+    for _, obj in ipairs(Rushs) do
+        
+        if obj:FindFirstChild("RushInfo") then 
+            continue 
+        end 
+
+        local Info = Instance.new("BillboardGui")
+        Info.Name = "RushInfo"
+        Info.Size = UDim2.new(0, 200, 0, 25)
+        Info.StudsOffset = Vector3.new(0, 2, 0)
+        Info.AlwaysOnTop = true
+        Info.Parent = obj       
+        table.insert(RushHighlights, Info)  
+
+        local textLabel = Instance.new("TextLabel")
+        textLabel.Size = UDim2.fromScale(1, 2)
+        textLabel.BackgroundTransparency = 1
+        textLabel.Text = "Rush"
+        textLabel.TextScaled = false
+        textLabel.TextSize = 20
+        textLabel.TextStrokeTransparency = 0
+        textLabel.TextColor3 = Color3.new(1, 0, 0)
+        textLabel.Font = font
+        textLabel.Parent = Info   
+        table.insert(RushHighlights, textLabel)          
+            
+    end                               
+end
+
+function RushESP:Disable()
+	for _, obj in ipairs(RushHighlights) do
+		if obj and obj.Parent then
+			obj:Destroy()
+		end
+	end
+	table.clear(RushHighlights)
+
+end
 
 function RushESP:SetEnabled(state)
-    
-    RushEnabled = state 
-
-    if RushEnabled then
-        workspace.ChildAdded:Connect(function()
-            
-            for _, child in ipairs(workspace:GetChildren()) do
-                if child.Name == "RushMoving" then
-                    table.insert(Rushes, child)
-                end
-            end
-
-            for _, Rush in ipairs(Rushes) do
-                if Rush then
-                    if Rush:FindFirstChild("RushESP") then 
-                    continue
-                    end
-
-                    local RushESP = Instance.new("BillboardGui")
-                    RushESP.Name = "RushESP"
-                    RushESP.Size = UDim2.new(0, 200, 0, 50)
-                    RushESP.StudsOffset = Vector3.new(0, 2, 0)
-                    RushESP.AlwaysOnTop = true
-                    RushESP.Parent = Rush
-
-                    local textLabel = Instance.new("TextLabel")
-                    textLabel.Size = UDim2.fromScale(1, 1)
-                    textLabel.BackgroundTransparency = 1
-                    textLabel.Text = "Rush"
-                    textLabel.TextScaled = true
-                    textLabel.TextColor3 = Color3.new(255, 0, 0)
-                    textLabel.Font = font
-                    textLabel.Parent = RushESP
-
-                    table.insert(RushHighlights, RushESP, textLabel)
-                end
-            end
-        end)
-    else
-        for _, esp in ipairs(RushHighlights) do
-            if esp and esp.Parent then
-                esp:Destroy()
-            end
-        end
-        
-        table.clear(RushHighlights)
-    end
+	if state and not enabled then
+		self:Enable()
+	elseif not state and enabled then
+		self:Disable()
+	end
+	enabled = state
 end
+
+ws.ChildAdded:Connect(function()
+	if not enabled then return end
+	task.wait(1)
+	RushESP:Enable()
+end)
+
+return RushESP
+
+

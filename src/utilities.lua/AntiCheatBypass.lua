@@ -20,7 +20,6 @@ function Bp:SetEnabled(state)
     while enabled do
         if ntclp and ntclp.Parent then
             ntclp.Massless = not ntclp.Massless
-            print(enabled)
             task.wait(.25)
         end
     end

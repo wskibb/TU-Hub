@@ -32,9 +32,6 @@ UI:CloseButton(function()
 	--Fullbright
 	Fullbright:SetEnabled(false)
 	
-	--HeadDown
-	HeadDown:SetEnabled(false)
-	
 	--AntiCheatBypass
 	ACBypass:SetEnabled(false)
 

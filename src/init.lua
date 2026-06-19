@@ -3,6 +3,9 @@ local DoorESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskib
 local KeyESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/modules/ESP/KeyESP.lua"))()
 local RushESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/modules/ESP/RushESP.lua"))()
 local ACBypass = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/utilities.lua/AntiCheatBypass.lua"))()
+local Fullbright = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/modules/Visuals/Fullbright.lua"))()
+local HeadDown = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/modules/Visuals/HeadDown.lua"))()
+local AntiEyes = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/modules/Exploits/AntiEyes.lua"))()
 
 
 
@@ -26,9 +29,18 @@ UI:CloseButton(function()
 	DoorESP:SetEnabled(false)
 
 	KeyESP:SetEnabled(false)
+
+	--Fullbright
+	Fullbright:SetEnabled(false)
+	
+	--HeadDown
+	HeadDown:SetEnabled(false)
 	
 	--AntiCheatBypass
 	ACBypass:SetEnabled(false)
+
+	--AntiEyes
+	AntiEyes:SetEnabled(false)
 	
 end)
 
@@ -38,6 +50,11 @@ end)
 --AntiCheat Bypass
 UI:addToggleButton("Bypass Anti-Cheat", UI.mainPage, -1, function(state)
 	ACBypass:SetEnabled(state)
+end)
+
+--AntiEyes
+UI:addToggleButton("AntiEyes", UI.exploitPage, 0, function(state)
+	AntiEyes:SetEnabled(state)
 end)
 	
 --DoorESP
@@ -53,6 +70,11 @@ end)
 --RushESP
 UI:addToggleButton("RushESP", UI.visualsPage, 2, function(state)
 	RushESP:SetEnabled(state)
+end)
+
+--Fullbright
+UI:addToggleButton("Fullbright", UI.visualsPage, 3, function(state)
+	Fullbright:SetEnabled(state)
 end)
 
 

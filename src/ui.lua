@@ -8,6 +8,11 @@ local mouse = player:GetMouse()
 
 local UI = {}
 
+local function applyCursorState()
+	UIS.MouseIconEnabled = true
+	UIS.MouseBehavior = Enum.MouseBehavior.Default
+end
+
 --------------------------------------------------
 -- ScreenGui
 --------------------------------------------------
@@ -86,13 +91,21 @@ local function EnableCursor()
 
 	uivisible = true
 
-	UIS.MouseIconEnabled = true
-	UIS.MouseBehavior = Enum.MouseBehavior.Default
+	if CursorConnection then
+		CursorConnection:Disconnect()
+		CursorConnection = nil
+	end
+
+	applyCursorState()
+	task.defer(function()
+		if uivisible then
+			applyCursorState()
+		end
+	end)
 
 	CursorConnection = RunService.RenderStepped:Connect(function()
 		if uivisible then
-			UIS.MouseIconEnabled = true
-			UIS.MouseBehavior = Enum.MouseBehavior.Default
+			applyCursorState()
 		end
 	end)
 end	
@@ -245,19 +258,86 @@ local function createPage(name)
 	label.TextXAlignment = "Left"
 	label.Parent = page
 
-	local pagecontainer = Instance.new("Frame")
+	local pagecontainer = Instance.new("ScrollingFrame")
 	pagecontainer.Name = "Container"
-	pagecontainer.Size = UDim2.new(0,600,0,390)
+	pagecontainer.Size = UDim2.new(0, 600, 0, 390)
 	pagecontainer.BackgroundTransparency = 1
-	pagecontainer.Position = UDim2.new(0.03,0,0.16,0)
+	pagecontainer.BorderSizePixel = 0
+	pagecontainer.CanvasSize = UDim2.new()
+	pagecontainer.AutomaticCanvasSize = Enum.AutomaticSize.Y
+	pagecontainer.ScrollBarThickness = 6
+	pagecontainer.ScrollingDirection = Enum.ScrollingDirection.Y
+	pagecontainer.Position = UDim2.new(0.03, 0, 0.16, 0)
 	pagecontainer.Parent = page
 
 	local pagelayout = Instance.new("UIListLayout")
 	pagelayout.Padding = UDim.new(0, 30)
 	pagelayout.Parent = pagecontainer
+	pagelayout.SortOrder = Enum.SortOrder.LayoutOrder
+
 
 	return page, pagecontainer
 
+end
+
+--------------------------------------------------
+-- Section Creator
+--------------------------------------------------
+
+function UI:createSection(name, page, LayoutOrder)
+	local section = Instance.new("Frame")
+	section.Name = name .. "Section"
+	section.LayoutOrder = LayoutOrder
+	section.Size = UDim2.new(1, -10, 0, 0)
+	section.AutomaticSize = Enum.AutomaticSize.Y
+	section.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+	section.BorderColor3 = Color3.fromRGB(40, 40, 40)
+	section.BorderSizePixel = 1
+	section.Parent = page.Container
+
+	local sectionCorner = Instance.new("UICorner")
+	sectionCorner.CornerRadius = UDim.new(0, 6)
+	sectionCorner.Parent = section
+
+	local sectionPadding = Instance.new("UIPadding")
+	sectionPadding.PaddingTop = UDim.new(0, 12)
+	sectionPadding.PaddingBottom = UDim.new(0, 12)
+	sectionPadding.PaddingLeft = UDim.new(0, 12)
+	sectionPadding.PaddingRight = UDim.new(0, 12)
+	sectionPadding.Parent = section
+
+	local sectionLabel = Instance.new("TextLabel")
+	sectionLabel.Name = "Title"
+	sectionLabel.LayoutOrder = 0
+	sectionLabel.Size = UDim2.new(1, 0, 0, 20)
+	sectionLabel.BackgroundTransparency = 1
+	sectionLabel.Text = name
+	sectionLabel.TextColor3 = Color3.fromRGB(147, 0, 221)
+	sectionLabel.TextStrokeTransparency = 0
+	sectionLabel.Font = Enum.Font.SourceSansBold
+	sectionLabel.TextSize = 20
+	sectionLabel.TextXAlignment = Enum.TextXAlignment.Left
+	sectionLabel.Parent = section
+
+	local sectionContainer = Instance.new("Frame")
+	sectionContainer.Name = "Container"
+	sectionContainer.LayoutOrder = 1
+	sectionContainer.Size = UDim2.new(1, 0, 0, 0)
+	sectionContainer.AutomaticSize = Enum.AutomaticSize.Y
+	sectionContainer.BackgroundTransparency = 1
+	sectionContainer.Parent = section
+
+	local sectionLayout = Instance.new("UIListLayout")
+	sectionLayout.Padding = UDim.new(0, 10)
+	sectionLayout.SortOrder = Enum.SortOrder.LayoutOrder
+	sectionLayout.Parent = sectionContainer
+
+	local sectionRootLayout = Instance.new("UIListLayout")
+	sectionRootLayout.Padding = UDim.new(0, 12)
+	sectionRootLayout.SortOrder = Enum.SortOrder.LayoutOrder
+	sectionRootLayout.Parent = section
+
+	return section
 end
 
 --------------------------------------------------

@@ -40,7 +40,7 @@ function AmbushESP:Enable(state)
         textLabel.TextScaled = false
         textLabel.TextSize = 20
         textLabel.TextStrokeTransparency = 0
-        textLabel.TextColor3 = Color3.new(0, 0, 1) -- Blue color for Ambush
+        textLabel.TextColor3 = Color3.new(1, 0, 0)
         textLabel.Font = font
         textLabel.Parent = Info   
         table.insert(AmbushHighlights, textLabel)          

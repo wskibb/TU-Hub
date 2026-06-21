@@ -14,6 +14,11 @@ local plr = game.Players.LocalPlayer
 local walkspeedActive = false
 local currentSpeedValue = 0
 
+local mainMovementSection = UI:createSection("Movement", UI.mainPage, 0)
+local visualsEspSection = UI:createSection("ESP", UI.visualsPage, 0)
+local visualsEnvironmentSection = UI:createSection("Environment", UI.visualsPage, 1)
+local exploitProtectionSection = UI:createSection("Protection", UI.exploitPage, 0)
+
 --shutdown
 
 UI:CloseButton(function()
@@ -47,43 +52,43 @@ end)
 --//Buttons\\--
 
 --AntiCheat Bypass
-UI:addToggleButton("Bypass Anti-Cheat", UI.mainPage, -1, function(state)
+UI:addToggleButton("Bypass Anti-Cheat", exploitProtectionSection, 0, function(state)
 	ACBypass:SetEnabled(state)
 end)
 
 --AntiEyes
-UI:addToggleButton("AntiEyes", UI.exploitPage, 0, function(state)
+UI:addToggleButton("AntiEyes", exploitProtectionSection, 1, function(state)
 	AntiEyes:SetEnabled(state)
 end)
 	
 --DoorESP
-UI:addToggleButton("Door ESP", UI.visualsPage, 0, function(state)
+UI:addToggleButton("Door ESP", visualsEspSection, 0, function(state)
 	DoorESP:SetEnabled(state)
 end)
 
 --KeyESP
-UI:addToggleButton("KeyESP", UI.visualsPage, 1, function(state)
+UI:addToggleButton("KeyESP", visualsEspSection, 1, function(state)
 	KeyESP:SetEnabled(state)
 end)
 
 --RushESP
-UI:addToggleButton("RushESP", UI.visualsPage, 2, function(state)
+UI:addToggleButton("RushESP", visualsEspSection, 2, function(state)
 	RushESP:SetEnabled(state)
 end)
 
 --Fullbright
-UI:addToggleButton("Fullbright", UI.visualsPage, 3, function(state)
+UI:addToggleButton("Fullbright", visualsEnvironmentSection, 0, function(state)
 	Fullbright:SetEnabled(state)
 end)
 
 --AmbushESP
-UI:addToggleButton("AmbushESP", UI.visualsPage, 4, function(state)
+UI:addToggleButton("AmbushESP", visualsEspSection, 3, function(state)
 	AmbushESP:SetEnabled(state)
 end)
 
 
 --Enable Walkspeed Button
-UI:addToggleButton("Enable Walkspeed", UI.mainPage, 1, function(state)
+UI:addToggleButton("Enable Walkspeed", mainMovementSection, 0, function(state)
 	walkspeedActive = state
 	local char = game.Players.LocalPlayer.Character
 
@@ -97,7 +102,7 @@ UI:addToggleButton("Enable Walkspeed", UI.mainPage, 1, function(state)
 end)
 
 --Change Walkspeed Slider
-UI:addSlider("Walkspeed", 0, 75, UI.mainPage, 2, function(value)
+UI:addSlider("Walkspeed", 0, 75, mainMovementSection, 1, function(value)
 	currentSpeedValue = value
 	local char = game.Players.LocalPlayer.Character
 

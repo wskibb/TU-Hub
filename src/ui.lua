@@ -7,10 +7,23 @@ local CursorConnection
 local mouse = player:GetMouse()
 
 local UI = {}
+local EnableCursor
+local DisableCursor
 
 local function applyCursorState()
 	UIS.MouseIconEnabled = true
 	UIS.MouseBehavior = Enum.MouseBehavior.Default
+end
+
+local function setGuiVisibility(state)
+	gui.Enabled = state
+	uivisible = state
+
+	if state then
+		EnableCursor()
+	else
+		DisableCursor()
+	end
 end
 
 --------------------------------------------------
@@ -86,7 +99,7 @@ HideButton.Parent = topBar
 -- Close/Hide Logic
 --------------------------------------------------
 
-local function EnableCursor()
+EnableCursor = function()
 	if not gui then return end
 
 	uivisible = true
@@ -111,7 +124,7 @@ local function EnableCursor()
 end	
 
 
-local function DisableCursor()
+DisableCursor = function()
 	uivisible = false
 
 	if CursorConnection then
@@ -143,26 +156,19 @@ function UI:CloseButton(callback)
 end 
 
 local function Hide()
-	gui.Enabled = false
-	uivisible = false
-	DisableCursor()
+	setGuiVisibility(false)
 end
 
 
 
 HideButton.MouseButton1Click:Connect(Hide)
 
-UIS.InputBegan:Connect(function(input)
-	if input.KeyCode == Enum.KeyCode.RightShift then
-
-		if uivisible then
-			gui.Enabled = false
-			DisableCursor()
-		else 
-			gui.Enabled = true
-			EnableCursor()
-		end
+UIS.InputEnded:Connect(function(input)
+	if input.KeyCode ~= Enum.KeyCode.RightShift then
+		return
 	end
+
+	setGuiVisibility(not uivisible)
 end)
 
 --------------------------------------------------

@@ -64,7 +64,7 @@ function Bp:SetEnabled(state)
             if clone and clone.Parent then
                 clone.Massless = not clone.Massless
             end
-            task.wait(0.30)
+            task.wait(0.25)
         end
 
         if currentWorker == workerId then

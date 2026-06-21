@@ -6,6 +6,7 @@ local ACBypass = loadstring(game:HttpGet("https://raw.githubusercontent.com/wski
 local Fullbright = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/modules/Visuals/Fullbright.lua"))()
 local AntiEyes = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/modules/Exploits/AntiEyes.lua"))()
 local AmbushESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/modules/ESP/AmbushESP.lua"))()
+local AutoLoot = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/modules/Exploits/AutoLoot.lua"))()
 
 
 
@@ -18,6 +19,7 @@ local mainMovementSection = UI:createSection("Movement", UI.mainPage, 0)
 local visualsEspSection = UI:createSection("ESP", UI.visualsPage, 0)
 local visualsEnvironmentSection = UI:createSection("Environment", UI.visualsPage, 1)
 local exploitProtectionSection = UI:createSection("Protection", UI.exploitPage, 0)
+local exploitLootingSection = UI:createSection("Looting", UI.exploitPage, 1)
 
 --shutdown
 
@@ -45,6 +47,8 @@ UI:CloseButton(function()
 	AntiEyes:SetEnabled(false)
 	--AmbushESP
 	AmbushESP:SetEnabled(false)
+	--AutoLoot
+	AutoLoot:SetEnabled(false)
 	
 end)
 
@@ -59,6 +63,11 @@ end)
 --AntiEyes
 UI:addToggleButton("AntiEyes", exploitProtectionSection, 1, function(state)
 	AntiEyes:SetEnabled(state)
+end)
+
+--AutoLoot
+UI:addToggleButton("AutoLoot", exploitLootingSection, 0, function(state)
+	AutoLoot:SetEnabled(state)
 end)
 	
 --DoorESP

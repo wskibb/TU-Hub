@@ -5,6 +5,7 @@ local RushESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskib
 local ACBypass = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/utilities.lua/AntiCheatBypass.lua"))()
 local Fullbright = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/modules/Visuals/Fullbright.lua"))()
 local AntiEyes = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/modules/Exploits/AntiEyes.lua"))()
+local AmbushESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/modules/ESP/AmbushESP.lua"))()
 
 
 
@@ -37,6 +38,8 @@ UI:CloseButton(function()
 
 	--AntiEyes
 	AntiEyes:SetEnabled(false)
+	--AmbushESP
+	AmbushESP:SetEnabled(false)
 	
 end)
 
@@ -71,6 +74,11 @@ end)
 --Fullbright
 UI:addToggleButton("Fullbright", UI.visualsPage, 3, function(state)
 	Fullbright:SetEnabled(state)
+end)
+
+--AmbushESP
+UI:addToggleButton("AmbushESP", UI.visualsPage, 4, function(state)
+	AmbushESP:SetEnabled(state)
 end)
 
 

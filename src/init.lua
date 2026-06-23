@@ -52,7 +52,7 @@ end)
 --//Buttons\\--
 
 --AntiCheat Bypass
-UI:addToggleButton("Bypass Anti-Cheat", exploitProtectionSection, 0, function(state)
+UI:addToggleButton("Bypass Anti-Cheat", mainMovementSection, 0, function(state)
 	ACBypass:SetEnabled(state)
 end)
 
@@ -88,7 +88,7 @@ end)
 
 
 --Enable Walkspeed Button
-UI:addToggleButton("Enable Walkspeed", mainMovementSection, 0, function(state)
+UI:addToggleButton("Enable Walkspeed", mainMovementSection, 1, function(state)
 	walkspeedActive = state
 	local char = game.Players.LocalPlayer.Character
 
@@ -102,7 +102,7 @@ UI:addToggleButton("Enable Walkspeed", mainMovementSection, 0, function(state)
 end)
 
 --Change Walkspeed Slider
-UI:addSlider("Walkspeed", 0, 75, mainMovementSection, 1, function(value)
+UI:addSlider("Walkspeed", 0, 75, mainMovementSection, 2, function(value)
 	currentSpeedValue = value
 	local char = game.Players.LocalPlayer.Character
 

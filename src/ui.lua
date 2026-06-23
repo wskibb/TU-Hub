@@ -1,34 +1,45 @@
 local Players = game:GetService("Players")
 local UIS = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
 local player = Players.LocalPlayer
 local uivisible = true
-local RunService = game:GetService("RunService")
-local CursorConnection
 local mouse = player:GetMouse()
 
 local UI = {}
 local EnableCursor
 local DisableCursor
 local gui
+local CursorConnection
+local ToggleConnection
+local closed = false
+local originalMouseState = {
+	MouseIconEnabled = UIS.MouseIconEnabled,
+	MouseBehavior = UIS.MouseBehavior
+}
+local gameplayMouseState = {
+	MouseIconEnabled = false,
+	MouseBehavior = Enum.MouseBehavior.LockCenter
+}
+local customCursor
 
-local function applyCursorState()
-	UIS.MouseIconEnabled = true
-	UIS.MouseBehavior = Enum.MouseBehavior.Default
+local function restoreMouseState(state)
+	UIS.MouseIconEnabled = state.MouseIconEnabled
+	UIS.MouseBehavior = state.MouseBehavior
 end
 
-local function forceCursorForFrames(frameCount)
-	task.spawn(function()
-		for _ = 1, frameCount do
-			if not uivisible then
-				return
-			end
-			applyCursorState()
-			RunService.RenderStepped:Wait()
-		end
-	end)
+local function updateCursor()
+	if not customCursor then
+		return
+	end
+
+	customCursor.Position = UDim2.fromOffset(mouse.X + 2, mouse.Y + 2)
 end
 
 local function setGuiVisibility(state)
+	if closed or not gui or not gui.Parent then
+		return
+	end
+
 	gui.Enabled = state
 	uivisible = state
 
@@ -47,6 +58,26 @@ gui = Instance.new("ScreenGui")
 gui.Name = "TU-Hub"
 gui.ResetOnSpawn = false
 gui.Parent = player:WaitForChild("PlayerGui")
+
+customCursor = Instance.new("Frame")
+customCursor.Name = "MenuCursor"
+customCursor.AnchorPoint = Vector2.new(0.5, 0.5)
+customCursor.Size = UDim2.fromOffset(10, 10)
+customCursor.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+customCursor.BorderSizePixel = 0
+customCursor.Visible = false
+customCursor.ZIndex = 1000
+customCursor.Active = false
+customCursor.Parent = gui
+
+local customCursorCorner = Instance.new("UICorner")
+customCursorCorner.CornerRadius = UDim.new(1, 0)
+customCursorCorner.Parent = customCursor
+
+local customCursorStroke = Instance.new("UIStroke")
+customCursorStroke.Color = Color3.fromRGB(147, 0, 221)
+customCursorStroke.Thickness = 1
+customCursorStroke.Parent = customCursor
 
 --------------------------------------------------
 -- Main Frame
@@ -113,7 +144,9 @@ HideButton.Parent = topBar
 --------------------------------------------------
 
 EnableCursor = function()
-	if not gui then return end
+	if closed or not gui or not gui.Parent then
+		return
+	end
 
 	uivisible = true
 
@@ -122,12 +155,16 @@ EnableCursor = function()
 		CursorConnection = nil
 	end
 
-	applyCursorState()
-	forceCursorForFrames(12)
+	UIS.MouseIconEnabled = false
+	UIS.MouseBehavior = Enum.MouseBehavior.Default
+	customCursor.Visible = true
+	updateCursor()
 
 	CursorConnection = RunService.RenderStepped:Connect(function()
 		if uivisible then
-			applyCursorState()
+			UIS.MouseIconEnabled = false
+			UIS.MouseBehavior = Enum.MouseBehavior.Default
+			updateCursor()
 		end
 	end)
 end	
@@ -141,8 +178,11 @@ DisableCursor = function()
 		CursorConnection = nil
 	end
 
-	UIS.MouseIconEnabled = false
-	UIS.MouseBehavior = Enum.MouseBehavior.LockCenter
+	if customCursor then
+		customCursor.Visible = false
+	end
+
+	restoreMouseState(gameplayMouseState)
 end
 
 function UI:CloseButton(callback)
@@ -158,9 +198,20 @@ function UI:CloseButton(callback)
 	
 
 	CloseButton.MouseButton1Click:Connect(function()  
+		closed = true
+		if ToggleConnection then
+			ToggleConnection:Disconnect()
+			ToggleConnection = nil
+		end
+
 		callback()
+		if CursorConnection then
+			CursorConnection:Disconnect()
+			CursorConnection = nil
+		end
+		restoreMouseState(originalMouseState)
 		gui:Destroy()
-		DisableCursor()
+		gui = nil
 	end)
 end 
 
@@ -172,7 +223,7 @@ end
 
 HideButton.MouseButton1Click:Connect(Hide)
 
-UIS.InputBegan:Connect(function(input, gameProcessed)
+ToggleConnection = UIS.InputBegan:Connect(function(input, gameProcessed)
 	if gameProcessed or input.KeyCode ~= Enum.KeyCode.RightShift then
 		return
 	end
@@ -525,10 +576,6 @@ createTab("Settings", UI.settingsPage)
 UI.mainPage.Visible = true
 currentPage = UI.mainPage
 
-EnableCursor()
-
-if uivisible == true then
-	UIS.MouseBehavior = Enum.MouseBehavior.Default
-end
+setGuiVisibility(true)
 
 return UI

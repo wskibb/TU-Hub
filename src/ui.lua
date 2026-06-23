@@ -9,10 +9,23 @@ local mouse = player:GetMouse()
 local UI = {}
 local EnableCursor
 local DisableCursor
+local gui
 
 local function applyCursorState()
 	UIS.MouseIconEnabled = true
 	UIS.MouseBehavior = Enum.MouseBehavior.Default
+end
+
+local function forceCursorForFrames(frameCount)
+	task.spawn(function()
+		for _ = 1, frameCount do
+			if not uivisible then
+				return
+			end
+			applyCursorState()
+			RunService.RenderStepped:Wait()
+		end
+	end)
 end
 
 local function setGuiVisibility(state)
@@ -30,7 +43,7 @@ end
 -- ScreenGui
 --------------------------------------------------
 
-local gui = Instance.new("ScreenGui")
+gui = Instance.new("ScreenGui")
 gui.Name = "TU-Hub"
 gui.ResetOnSpawn = false
 gui.Parent = player:WaitForChild("PlayerGui")
@@ -110,11 +123,7 @@ EnableCursor = function()
 	end
 
 	applyCursorState()
-	task.defer(function()
-		if uivisible then
-			applyCursorState()
-		end
-	end)
+	forceCursorForFrames(12)
 
 	CursorConnection = RunService.RenderStepped:Connect(function()
 		if uivisible then
@@ -163,8 +172,8 @@ end
 
 HideButton.MouseButton1Click:Connect(Hide)
 
-UIS.InputEnded:Connect(function(input)
-	if input.KeyCode ~= Enum.KeyCode.RightShift then
+UIS.InputBegan:Connect(function(input, gameProcessed)
+	if gameProcessed or input.KeyCode ~= Enum.KeyCode.RightShift then
 		return
 	end
 

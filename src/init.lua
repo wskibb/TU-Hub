@@ -1,6 +1,7 @@
 local UI = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/ui.lua"))()
 local DoorESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/modules/ESP/DoorESP.lua"))()
 local KeyESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/modules/ESP/KeyESP.lua"))()
+local LootESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/modules/ESP/LootESP.lua"))()
 local RushESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/modules/ESP/RushESP.lua"))()
 local ACBypass = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/utilities.lua/AntiCheatBypass.lua"))()
 local Fullbright = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/modules/Visuals/Fullbright.lua"))()
@@ -34,6 +35,8 @@ UI:CloseButton(function()
 	DoorESP:SetEnabled(false)
 
 	KeyESP:SetEnabled(false)
+
+	LootESP:SetEnabled(false)
 
 	--Fullbright
 	Fullbright:SetEnabled(false)
@@ -71,8 +74,13 @@ UI:addToggleButton("KeyESP", visualsEspSection, 1, function(state)
 	KeyESP:SetEnabled(state)
 end)
 
+--LootESP
+UI:addToggleButton("Loot ESP", visualsEspSection, 2, function(state)
+	LootESP:SetEnabled(state)
+end)
+
 --RushESP
-UI:addToggleButton("RushESP", visualsEspSection, 2, function(state)
+UI:addToggleButton("RushESP", visualsEspSection, 3, function(state)
 	RushESP:SetEnabled(state)
 end)
 
@@ -82,7 +90,7 @@ UI:addToggleButton("Fullbright", visualsEnvironmentSection, 0, function(state)
 end)
 
 --AmbushESP
-UI:addToggleButton("AmbushESP", visualsEspSection, 3, function(state)
+UI:addToggleButton("AmbushESP", visualsEspSection, 4, function(state)
 	AmbushESP:SetEnabled(state)
 end)
 

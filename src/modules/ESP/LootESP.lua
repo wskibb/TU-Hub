@@ -12,8 +12,6 @@ local enabled = false
 
 
 
-print("works till 15")
-
 function LootESP:Enable(state)
    
     for _, obj in ipairs(rooms:GetDescendants()) do
@@ -25,7 +23,8 @@ function LootESP:Enable(state)
     for _, obj in ipairs(Loot) do
         
         local prnt = obj.Parent
-        local prompt = prnt.Knobs.ActivateEventPrompt
+        local knobs = prnt:FindFirstChild("Knobs")
+        local prompt = knobs:FindFirstChild("ActivateEventPrompt")
         
         if prompt:GetAttribute("Interactions") or obj:FindFirstChild("LootESP") then
             continue

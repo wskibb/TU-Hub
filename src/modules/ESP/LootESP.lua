@@ -19,6 +19,23 @@ local function getAdornee(instance)
 	return instance:FindFirstChildWhichIsA("BasePart", true)
 end
 
+local function getDrawerActivatePrompt(instance)
+	local current = instance
+	while current and current ~= rooms do
+		if current.Name == "DrawerContainer" then
+			local knobs = current:FindFirstChild("Knobs")
+			if knobs then
+				return knobs:FindFirstChild("ActivateEventPrompt")
+			end
+			return nil
+		end
+
+		current = current.Parent
+	end
+
+	return nil
+end
+
 local function getGoldValue(prompt, loot)
 	local current = loot or prompt
 	while current and current ~= rooms do
@@ -44,6 +61,11 @@ local function getLootInstance(prompt)
 	return nil
 end
 
+local function shouldSkipPrompt(prompt, loot)
+	local activatePrompt = getDrawerActivatePrompt(loot or prompt)
+	return activatePrompt and activatePrompt:GetAttribute("Interactions") ~= nil
+end
+
 local function getLootLabelText(prompt, loot)
 	local goldValue = getGoldValue(prompt, loot)
 	if goldValue ~= nil then
@@ -60,7 +82,7 @@ function LootESP:Enable()
 		end
 
 		local loot = getLootInstance(prompt)
-		if not loot or loot:FindFirstChild("LootESP") or loot:FindFirstChild("LootInfo") then
+		if not loot or shouldSkipPrompt(prompt, loot) or loot:FindFirstChild("LootESP") or loot:FindFirstChild("LootInfo") then
 			continue
 		end
 
@@ -117,8 +139,12 @@ function LootESP:SetEnabled(state)
 	enabled = state
 end
 
-rooms.DescendantAdded:Connect(function()
+rooms.DescendantAdded:Connect(function(prompt)
 	if not enabled then
+		return
+	end
+
+	if not prompt:IsA("ProximityPrompt") or prompt.Name ~= "LootPrompt" then
 		return
 	end
 

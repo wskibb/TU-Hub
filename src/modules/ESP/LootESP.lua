@@ -26,11 +26,7 @@ function LootESP:Enable(state)
         
         local prnt = obj.Parent
 
-        prnt.Knobs.ActivateEventPrompt.AttributChanged:Connect(function(attribute)
-            if attribute.Name == "Interactions" then
-                continue
-            end
-        end)
+        
         
         if prnt.Knobs.ActivateEventPrompt:GetAttribute("Interactions") or obj:FindFirstChild("LootESP") then
             continue

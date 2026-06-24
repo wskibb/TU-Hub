@@ -15,7 +15,7 @@ local enabled = false
 print("works till 15")
 
 function LootESP:Enable(state)
-    print("works till 18")
+   
     for _, obj in ipairs(rooms:GetDescendants()) do
         if obj.Name == "GoldPile" then
             table.insert(Loot, obj)
@@ -25,9 +25,9 @@ function LootESP:Enable(state)
     for _, obj in ipairs(Loot) do
         
         local prnt = obj.Parent
-
+        local prompt = prnt.Knobs.ActivateEventPrompt
         
-        if prnt.Knobs.ActivateEventPrompt:GetAttribute("Interactions") or obj:FindFirstChild("LootESP") then
+        if prompt:GetAttribute("Interactions") or obj:FindFirstChild("LootESP") then
             continue
         end
         

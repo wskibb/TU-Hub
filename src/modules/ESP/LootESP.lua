@@ -24,7 +24,7 @@ function LootESP:Enable(state)
         
         local prnt = obj.Parent
         local knobs = prnt:FindFirstChild("Knobs")
-        local prompt = knobs:FindFirstChild("ActivateEventPrompt")
+        local prompt = knobs and knobs:FindFirstChild("ActivateEventPrompt")
         
         if prompt:GetAttribute("Interactions") or obj:FindFirstChild("LootESP") then
             continue

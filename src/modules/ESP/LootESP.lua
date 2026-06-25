@@ -23,7 +23,7 @@ function LootESP:Enable(state)
     for _, obj in ipairs(Loot) do
         
         local prnt = obj.Parent
-        local knobs = prnt:FindFirstChild("Knobs")
+        local knobs = prnt and prnt:FindFirstChild("Knobs")
         local prompt = knobs and knobs:FindFirstChild("ActivateEventPrompt")
         local hasinteractions = prompt and prompt:GetAttribute("Interactions")
 

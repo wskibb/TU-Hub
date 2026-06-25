@@ -58,7 +58,7 @@ function LootESP:Enable(state)
         label.Font = font
 
         
-        label.Text = "Gold:\n[ " .. (obj.GoldValue) .. " ]"
+        label.Text = "Gold:\n[ " .. (obj:GetAttribute("GoldValue")) .. " ]"
         label.Parent = info
         table.insert(LootHighlights, label)		
     end

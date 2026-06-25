@@ -42,7 +42,6 @@ function LootESP:Enable(state)
         local info = Instance.new("BillboardGui")
         info.Name = "LootInfo"
         info.Size = UDim2.new(0, 200, 0, 25)
-        info.StudsOffset = Vector3.new(0, 2, 0)
         info.AlwaysOnTop = true
         info.Adornee = obj.PrimaryPart
         info.Parent = obj

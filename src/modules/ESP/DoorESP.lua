@@ -35,8 +35,7 @@ function DoorESP:Enable()
 					end	
 				end)
 
-				if model:FindFirstChild("DoorESP") or model:GetAttribute("Opened") then
-					print("found one")	
+				if model:FindFirstChild("DoorESP") or model:GetAttribute("Opened") then	
 					continue
 				end
 
@@ -54,6 +53,8 @@ function DoorESP:Enable()
 				highlight.Parent = model
 				table.insert(created, highlight)
 
+				task.wait(.1)
+
 				local info = Instance.new("BillboardGui")
 				info.Name = "DoorInfo"
 				info.Size = UDim2.new(0, 200, 0, 25)
@@ -62,6 +63,8 @@ function DoorESP:Enable()
 				info.Adornee = model.PrimaryPart
 				info.Parent = model
 				table.insert(created, info)
+				
+				task.wait(.1)
 
 				local label = Instance.new("TextLabel")
 				label.Size = UDim2.fromScale(1, 2)

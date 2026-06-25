@@ -32,14 +32,18 @@ function KeyESP:Enable(state)
         esp.Parent = obj
         table.insert(KeyHighlights, esp)  
 
+        task.wait(.1)
+
         local Info = Instance.new("BillboardGui")
         Info.Name = "KeyInfo"
         Info.Size = UDim2.new(0, 200, 0, 25)
-        Info.StudsOffset = Vector3.new(0, 2, 0)
+        Info.StudsOffset = Vector3.new(0, 1, 0)
         Info.AlwaysOnTop = true
         Info.Parent = obj       
         table.insert(KeyHighlights, Info)  
 
+        task.wait(.1)
+        
         local textLabel = Instance.new("TextLabel")
         textLabel.Size = UDim2.fromScale(1, 2)
         textLabel.BackgroundTransparency = 1

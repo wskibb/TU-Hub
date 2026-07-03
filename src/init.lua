@@ -7,7 +7,7 @@ local ACBypass = loadstring(game:HttpGet("https://raw.githubusercontent.com/wski
 local Fullbright = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/modules/Visuals/Fullbright.lua"))()
 local AntiEyes = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/modules/Exploits/AntiEyes.lua"))()
 local AmbushESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/modules/ESP/AmbushESP.lua"))()
-
+local NoAcceleration = loadstring(game:HttpGet("https://raw.githubusercontent.com/wskibb/TU-Hub/refs/heads/main/src/modules/Exploits/NoAcceleration"))()
 
 
 local plr = game.Players.LocalPlayer
@@ -48,6 +48,9 @@ UI:CloseButton(function()
 	AntiEyes:SetEnabled(false)
 	--AmbushESP
 	AmbushESP:SetEnabled(false)
+
+	--NoAcceleration
+	NoAcceleration:SetEnabled(false)
 	
 end)
 
@@ -62,6 +65,11 @@ end)
 --AntiEyes
 UI:addToggleButton("AntiEyes", exploitProtectionSection, 1, function(state)
 	AntiEyes:SetEnabled(state)
+end)
+
+--NoAcceleration
+UI:addToggleButton("No Acceleration", mainMovementSection, 1, function(state)
+	NoAcceleration:SetEnabled(state)
 end)
 	
 --DoorESP
@@ -96,7 +104,7 @@ end)
 
 
 --Enable Walkspeed Button
-UI:addToggleButton("Enable Walkspeed", mainMovementSection, 1, function(state)
+UI:addToggleButton("Enable Walkspeed", mainMovementSection, 2, function(state)
 	walkspeedActive = state
 	local char = game.Players.LocalPlayer.Character
 
@@ -110,7 +118,7 @@ UI:addToggleButton("Enable Walkspeed", mainMovementSection, 1, function(state)
 end)
 
 --Change Walkspeed Slider
-UI:addSlider("Walkspeed", 0, 75, mainMovementSection, 2, function(value)
+UI:addSlider("Walkspeed", 0, 75, mainMovementSection, 3, function(value)
 	currentSpeedValue = value
 	local char = game.Players.LocalPlayer.Character
 
